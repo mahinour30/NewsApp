@@ -41,8 +41,6 @@ const SingleSource =({navigation,route})=>{
  renderItem={({item})=>{
 
 
-      console.log('===> source',newData)
-
       while(item.source.name === postSource){
         
         return(
