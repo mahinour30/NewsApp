@@ -1,5 +1,6 @@
 import React from 'react';
 import {View, Text, Image, TouchableOpacity, ScrollView, StyleSheet, Dimensions} from 'react-native';
+import moment from 'moment';
 
 const SinglePost =({route})=>{
 
@@ -36,7 +37,7 @@ const SinglePost =({route})=>{
         </View>
          <View style={styles.space}>
           <Text style={styles.Time}>
-            {PostDate}
+            {moment(PostDate).format('MMMM Do YYYY, h:mm:ss a')}
           </Text>
         </View>
          <View style={styles.space}>
