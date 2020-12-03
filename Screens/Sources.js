@@ -4,7 +4,7 @@ import { FlatList } from 'react-native-gesture-handler';
 import moment from 'moment';
 
 
-const URL = 'http://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=378c8ec60f864f2f839fd9499e69b4ce';
+const URL = 'http://newsapi.org/v2/top-headlines?country=eg&category=business&apiKey=378c8ec60f864f2f839fd9499e69b4ce';
 const Sources =({navigation})=>{
 
     const [data, setData]=useState([]);
