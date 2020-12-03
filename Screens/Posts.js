@@ -1,15 +1,12 @@
 import React, {useState, useEffect}  from 'react';
 import {View, Text, Image, TouchableOpacity, StyleSheet, ScrollView, Alert} from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
-import { createStackNavigator } from '@react-navigation/stack';
 import moment from 'moment';
 
-const PostsStack = createStackNavigator();
 
 const URL = 'http://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=378c8ec60f864f2f839fd9499e69b4ce';
 const Posts =({navigation})=>{
 
-    const [isLoading, setLoading]=useState(true);
     const [data, setData]=useState([]);
 
 
@@ -21,8 +18,6 @@ const Posts =({navigation})=>{
           setData(json.articles)
         })
         .catch((error) => Alert.alert('Error','Something IS Wrong!'))
-        .finally(()=>{setLoading(false)
-        });
       }, []);
 
 
@@ -89,7 +84,7 @@ const styles= StyleSheet.create({
         
     },
     sliderContainer:{
-      height:200,
+      height:120,
       width:'90%',
       marginTop:2,
       justifyContent:'center',
