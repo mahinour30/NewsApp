@@ -10,23 +10,7 @@ const Posts =({navigation})=>{
     const [data, setData]=useState([]);
 
 
-    const pushHistory=()=>{
-   firestore()
-  .collection('Posts')
-  .doc(item.url)
-  .set({
-    postIMG:item.urlToImage,
-    postTitle:item.title,
-    PostAuthor:item.author,
-    PostDate:item.publishedAt,
-    PostContent:item.content,
-    postSource:item.source.name,
-    PostURL:item.url,
-  })
-  .then(() => {
-    console.log('User added!');
-  });
-    }
+    
 
     useEffect(()=>{
         fetch(URL)
@@ -51,17 +35,39 @@ const Posts =({navigation})=>{
  data={data}
  keyExtractor={({id}, index)=>id}
  renderItem={({item})=>{
+
+
+    const pushHistory=()=>{
+        firestore()
+       .collection('Posts')
+       .doc()
+       .set({
+         postIMG:item.urlToImage,
+         postTitle:item.title,
+         PostAuthor:item.author,
+         PostDate:item.publishedAt,
+         PostContent:item.content,
+         postSource:item.source.name,
+         PostURL:item.url,
+       })
+       .then(() => {
+         navigation.navigate("SinglePost", {
+             postIMG:item.urlToImage,
+             postTitle:item.title,
+             PostAuthor:item.author,
+             PostDate:item.publishedAt,
+             PostContent:item.content,
+             postSource:item.source.name,
+             PostURL:item.url,
+           })
+         console.log('User added!');
+       });
+         }
+
+
     return(
         <View style ={styles.sliderContainer}> 
-        <TouchableOpacity onPress={()=>navigation.navigate("SinglePost", {
-            postIMG:item.urlToImage,
-            postTitle:item.title,
-            PostAuthor:item.author,
-            PostDate:item.publishedAt,
-            PostContent:item.content,
-            postSource:item.source.name,
-            PostURL:item.url,
-          })}>
+        <TouchableOpacity onPress={()=>{pushHistory()}}>
      <View style = {styles.card}>
      <View style={styles.cardImgWrapper}>
        <Image   source={{ uri: item.urlToImage }} 
