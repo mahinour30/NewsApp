@@ -2,7 +2,7 @@ import React, {useState, useEffect}  from 'react';
 import {View, Text, Image, TouchableOpacity, StyleSheet, ScrollView, Alert} from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import moment from 'moment';
-
+import firestore from '@react-native-firebase/firestore';
 
 const URL = 'http://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=378c8ec60f864f2f839fd9499e69b4ce';
 const Posts =({navigation})=>{
@@ -10,6 +10,23 @@ const Posts =({navigation})=>{
     const [data, setData]=useState([]);
 
 
+    const pushHistory=()=>{
+   firestore()
+  .collection('Posts')
+  .doc(item.url)
+  .set({
+    postIMG:item.urlToImage,
+    postTitle:item.title,
+    PostAuthor:item.author,
+    PostDate:item.publishedAt,
+    PostContent:item.content,
+    postSource:item.source.name,
+    PostURL:item.url,
+  })
+  .then(() => {
+    console.log('User added!');
+  });
+    }
 
     useEffect(()=>{
         fetch(URL)
