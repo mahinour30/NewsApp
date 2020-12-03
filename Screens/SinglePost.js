@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, Image, TouchableOpacity, ScrollView, StyleSheet, Dimensions} from 'react-native';
+import {View, Text, Image, TouchableOpacity, ScrollView, StyleSheet, Dimensions, Linking } from 'react-native';
 import moment from 'moment';
 
 const SinglePost =({route})=>{
@@ -13,6 +13,11 @@ const SinglePost =({route})=>{
     postSource,
     PostURL,
   } = route.params;
+
+  const URLOpen=()=>{
+    Linking.openURL(PostURL).catch((err) => console.error('An error occurred', err));
+  }
+
 
   return(
     <ScrollView style={styles.container}>
@@ -46,7 +51,7 @@ const SinglePost =({route})=>{
           </Text>
         </View>
          <View style={{alignItems:'center', marginTop:20, marginBottom:10}}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={()=>{URLOpen()}}>
           <Text>
             {postSource}
           </Text>
