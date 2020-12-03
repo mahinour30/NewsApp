@@ -1,59 +1,38 @@
 import React, {useState, useEffect}  from 'react';
-import {View, Text, StyleSheet, ScrollView, FlatList, Image} from 'react-native';
+import {View, Text, StyleSheet, ScrollView, FlatList, Image, TouchableOpacity} from 'react-native';
 import firestore from '@react-native-firebase/firestore';
+import moment from 'moment';
 
 const History =({navigation})=>{
 
+  const [data, setData]=useState([]);
 
   const getData = async()=>{
     const userDocument = await firestore()
     .collection('Posts')
     .doc('UJQj1J51IafE3u75eU9k')
     .get()
-    console.log(userDocument)
+    setData(userDocument._data)
   }
 
+  getData()
   return(
     
 
     <ScrollView>
-{/*       
- {
-<FlatList style={{flex:1}}
- data={userDocument}
- keyExtractor={({id}, index)=>id}
- renderItem={({item})=>{
-
-        
-        return(
-     */}
       
           <View style ={styles.sliderContainer}> 
        <View style = {styles.card}>
        <View style={styles.cardImgWrapper}>
-       {/* <Image   source={{ uri: item.urlToImage }} 
-       resizeMode='cover' style={styles.cardImg}/>  */}
+       <Image   source={{ uri: data.postIMG }} 
+       resizeMode='cover' style={styles.cardImg}/> 
      </View>
        <View style = {styles.cardInfo}>
-      <Text style={styles.cardTitle}>source</Text>
-      <Text style={styles.cardTitle}>author</Text>
-       <Text style= {styles.cardDetails}>title</Text>
-       <Text style= {styles.time}>time</Text>
+      <Text style={styles.cardTitle}> headline " {data.postTitle} " viewed at {moment(data.PostDate).calendar()}</Text>
        </View>
        </View>
        </View>
-          {/* )
-
-      }
-    
- } */}
-
-{/* /> */}
-
-
-
- 
-
+  
     </ScrollView>
 
   )
@@ -108,19 +87,5 @@ const styles= StyleSheet.create({
     cardTitle:{
       fontWeight:'bold',
     }, 
-    Title:{
-      fontSize:20,
-      color:'#666',
-      fontWeight:'bold'
-    },
-    cardDetails:{
-      fontSize:12,
-      color:'grey',
-    },
-    time:{
-        fontSize:10,
-        color:'grey',
-        alignItems:'flex-end'
-    },
    
 });
