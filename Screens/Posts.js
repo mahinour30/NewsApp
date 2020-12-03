@@ -2,6 +2,7 @@ import React, {useState, useEffect}  from 'react';
 import {View, Text, Image, TouchableOpacity, StyleSheet, ScrollView, Alert} from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import { createStackNavigator } from '@react-navigation/stack';
+import moment from 'moment';
 
 const PostsStack = createStackNavigator();
 
@@ -57,7 +58,7 @@ const Posts =({navigation})=>{
      <View style = {styles.cardInfo}>
     <Text style={styles.cardTitle}>{item.author}</Text>
        <Text style= {styles.cardDetails}>{item.title}</Text>
-       <Text style= {styles.time}>{item.publishedAt}</Text>
+       <Text style= {styles.time}>{moment(item.publishedAt).format('yyyy')}</Text>
 
      </View>
      </View>
