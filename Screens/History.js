@@ -28,7 +28,11 @@ const History =({navigation})=>{
        resizeMode='cover' style={styles.cardImg}/> 
      </View>
        <View style = {styles.cardInfo}>
-      <Text style={styles.cardTitle}> headline " {data.postTitle} " viewed at {moment(data.PostDate).calendar()}</Text>
+      <Text style={styles.cardTitle}>headline " {data.postTitle} "</Text>
+      <Text style={{fontSize:12, fontWeight:'bold'}}>by {data.PostAuthor}</Text>
+      <Text style={{fontSize:12}}>from {data.postSource}</Text>
+      <Text style={{fontSize:11, marginTop:40}}>viewed at {moment(data.PostDate).calendar()}</Text>
+
        </View>
        </View>
        </View>
@@ -48,7 +52,7 @@ const styles= StyleSheet.create({
         
     },
     sliderContainer:{
-      height:200,
+      height:220,
       width:'90%',
       marginTop:2,
       justifyContent:'center',
@@ -56,7 +60,7 @@ const styles= StyleSheet.create({
       borderRadius:8,
     },
     card:{
-      height:170,
+      height:190,
       flexDirection:'row',
       shadowColor:'gray',
       shadowOffset:{width:0, height:1},
