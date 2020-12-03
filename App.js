@@ -3,8 +3,8 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Posts from './Screens/Posts';
-import Sources from './Screens/Sources';
+import PostsStackScreen from './Screens/PostsStackScreen';
+import SourcesStackScreen from './Screens/SourcesStackScreen';
 import History from './Screens/History';
 
 
@@ -15,8 +15,8 @@ const App =()=>{
   return(
     <NavigationContainer>
    <Tab.Navigator>
-    <Tab.Screen name="Posts" component={Posts} />
-    <Tab.Screen name="Sources" component={Sources} />
+    <Tab.Screen name="Posts" component={PostsStackScreen} />
+    <Tab.Screen name="Sources" component={SourcesStackScreen} />
     <Tab.Screen name="History" component={History} />
    </Tab.Navigator>
 
