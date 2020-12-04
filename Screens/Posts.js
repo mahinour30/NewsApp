@@ -50,6 +50,18 @@ data={data}
           if (docSnapshot.exists) {
             usersRef.onSnapshot((doc) => {
               usersRef.update({PostDate:date})
+              .then(() => {
+                navigation.navigate("SinglePost", {
+                    postIMG:item.urlToImage,
+                    postTitle:item.title,
+                    PostAuthor:item.author,
+                    PostDate:item.publishedAt,
+                    PostContent:item.content,
+                    postSource:item.source.name,
+                    PostURL:item.url,
+                    FBDB:newURL
+                  })
+              })
             });
           } else {
             usersRef.set({
