@@ -4,6 +4,8 @@ import moment from 'moment';
 
 const SinglePost =({route})=>{
 
+
+  // getting parameters from Posts screen (the data retrieved from API that the user choose to access its post)
   const { 
     postIMG,
     postTitle,
@@ -14,6 +16,7 @@ const SinglePost =({route})=>{
     PostURL,
   } = route.params;
 
+  // for opening the source link in web page
   const URLOpen=()=>{
     Linking.openURL(PostURL).catch((err) => console.error('An error occurred', err));
   }
