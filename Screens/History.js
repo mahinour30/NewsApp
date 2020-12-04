@@ -3,40 +3,83 @@ import {View, Text, StyleSheet, ScrollView, FlatList, Image, TouchableOpacity} f
 import firestore from '@react-native-firebase/firestore';
 import moment from 'moment';
 
-const History =({navigation})=>{
+const History =({route})=>{
+  
 
-  const [data, setData]=useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [lastDoc, setLastDoc] = useState(null);
+  const [posts, setPosts] = useState([]);
 
-  const getData = async()=>{
-    const userDocument = await firestore()
-    .collection('Posts')
-    .doc('UJQj1J51IafE3u75eU9k')
-    .get()
-    setData(userDocument._data)
+  // retriving all the documents in the firestore collection
+
+  const PostsRef = firestore().collection('Posts');
+
+  
+  useEffect(()=>{
+    getPosts();
+  }, []);
+
+
+
+  getPosts = async()=>{
+    setIsLoading(true);
+
+
+    // getting the documents orderd by the time it was clicked
+
+    
+    const snapshot = await PostsRef.orderBy('PostDate').get();
+
+    if (!snapshot.empty){
+      let newPosts = [];
+
+      setLastDoc(snapshot.docs[snapshot.docs.length -1]);
+
+      for (let i=0; i<snapshot.docs.length; i++){
+        newPosts.push(snapshot.docs[i].data());
+      }
+
+      setPosts(newPosts);
+    } else {
+      setLastDoc(null);
+    }
+    setIsLoading(false);
   }
 
-  getData()
+  //pushing the data into the flatlist
+
+    renderList = ({postTitle,PostAuthor,PostDate,postIMG,postSource})=>{
+      console.log("from history",PostDate)
+
+      return(
+        <View style ={{width:'100%', flexDirection:'column', paddingHorizontal:10,marginBottom:20}}>
+          <View style ={styles.sliderContainer}> 
+      <View style = {styles.card}>
+      <View style={styles.cardImgWrapper}>
+      <Image   source={{ uri: postIMG }} 
+      resizeMode='cover' style={styles.cardImg}/> 
+    </View>
+      <View style = {styles.cardInfo}>
+     <Text numberOfLines={4} style={styles.cardTitle}>headline " {postTitle} "</Text>
+     <Text numberOfLines={1} style={{fontSize:12, fontWeight:'bold'}}>by {PostAuthor}</Text>
+     <Text numberOfLines={1} style={{fontSize:12}}>from {postSource}</Text>
+     <Text numberOfLines={1} style={{fontSize:11, marginTop:40}}>viewed at {moment(PostDate).calendar()}</Text>
+        {/* the date is accurate on firestore but forsome reason it doesn't get retrieved accurately */}
+      </View>
+      </View>
+      </View>
+        </View>
+      )
+    }
+
   return(
     
 
     <ScrollView>
-      
-          <View style ={styles.sliderContainer}> 
-       <View style = {styles.card}>
-       <View style={styles.cardImgWrapper}>
-       <Image   source={{ uri: data.postIMG }} 
-       resizeMode='cover' style={styles.cardImg}/> 
-     </View>
-       <View style = {styles.cardInfo}>
-      <Text style={styles.cardTitle}>headline " {data.postTitle} "</Text>
-      <Text style={{fontSize:12, fontWeight:'bold'}}>by {data.PostAuthor}</Text>
-      <Text style={{fontSize:12}}>from {data.postSource}</Text>
-      <Text style={{fontSize:11, marginTop:40}}>viewed at {moment(data.PostDate).calendar()}</Text>
-
-       </View>
-       </View>
-       </View>
-  
+      <FlatList
+      data ={posts}
+      renderItem={({item})=>renderList(item)}
+      />
     </ScrollView>
 
   )
