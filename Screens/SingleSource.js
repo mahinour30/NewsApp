@@ -7,15 +7,16 @@ import moment from 'moment';
 const URL = 'http://newsapi.org/v2/top-headlines?country=eg&category=business&apiKey=378c8ec60f864f2f839fd9499e69b4ce';
 const SingleSource =({navigation,route})=>{
 
+  //first we retrive the route parameter from sources for the post source
   const { 
     postSource,
   } = route.params;
 
     const [data, setData]=useState([]);
-    const [newData, setNewData]=useState([]);
 
 
-
+  
+  // then we fetch the API data
 
     useEffect(()=>{
         fetch(URL)
@@ -23,7 +24,7 @@ const SingleSource =({navigation,route})=>{
         .then((json)=> {
           setData(json.articles)
         })
-        .catch((error) => Alert.alert('Error','Something IS Wrong!'))
+        .catch((error) => Alert.alert('Error','Something IS Wrong!', error))
       }, []);
 
 
@@ -40,7 +41,7 @@ const SingleSource =({navigation,route})=>{
  keyExtractor={({id}, index)=>id}
  renderItem={({item})=>{
 
-
+    // the we show the  API data only if its source matches the source we got from the source screen
       while(item.source.name === postSource){
         
         return(
