@@ -10,7 +10,7 @@ const Posts =({navigation})=>{
     const [data, setData]=useState([]);
 
 
-    
+    // fetchin API data
 
     useEffect(()=>{
         fetch(URL)
@@ -31,40 +31,54 @@ const Posts =({navigation})=>{
      data != null &&
 
 <FlatList style={{flex:1}}
-//contentContainerStyle={{alignItems:"center"}}
- data={data}
- keyExtractor={({id}, index)=>id}
+
+data={data}
  renderItem={({item})=>{
 
+    const newURL = item.author+item.publishedAt
+    var date = new Date(); 
 
+    
+    // pushing data to firestore
     const pushHistory=()=>{
-        firestore()
-       .collection('Posts')
-       .doc()
-       .set({
-         postIMG:item.urlToImage,
-         postTitle:item.title,
-         PostAuthor:item.author,
-         PostDate:item.publishedAt,
-         PostContent:item.content,
-         postSource:item.source.name,
-         PostURL:item.url,
-       })
-       .then(() => {
-         navigation.navigate("SinglePost", {
-             postIMG:item.urlToImage,
-             postTitle:item.title,
-             PostAuthor:item.author,
-             PostDate:item.publishedAt,
-             PostContent:item.content,
-             postSource:item.source.name,
-             PostURL:item.url,
-           })
-         console.log('User added!');
-       });
+
+
+      const usersRef = firestore().collection('Posts').doc(newURL)
+      // checks if the data alredy exists in firestore it updates it if not it sets new data
+      usersRef.get()
+        .then((docSnapshot) => {
+          if (docSnapshot.exists) {
+            usersRef.onSnapshot((doc) => {
+              usersRef.update({PostDate:date})
+            });
+          } else {
+            usersRef.set({
+              postIMG:item.urlToImage,
+              postTitle:item.title,
+              PostAuthor:item.author,
+              PostDate:date,
+              PostContent:item.content,
+              postSource:item.source.name,
+              PostURL:item.url,
+            }).then(() => {
+              navigation.navigate("SinglePost", {
+                  postIMG:item.urlToImage,
+                  postTitle:item.title,
+                  PostAuthor:item.author,
+                  PostDate:item.publishedAt,
+                  PostContent:item.content,
+                  postSource:item.source.name,
+                  PostURL:item.url,
+                  FBDB:newURL
+                })
+            });
+          }
+          
+      });
+
          }
 
-
+         
     return(
         <View style ={styles.sliderContainer}> 
         <TouchableOpacity onPress={()=>{pushHistory()}}>
@@ -74,9 +88,9 @@ const Posts =({navigation})=>{
        resizeMode='cover' style={styles.cardImg}/> 
      </View>
      <View style = {styles.cardInfo}>
-    <Text style={styles.cardTitle}>{item.author}</Text>
-       <Text style= {styles.cardDetails}>{item.title}</Text>
-       <Text style= {styles.time}>{moment(item.publishedAt).format('yyyy')}</Text>
+    <Text numberOfLines={1} style={styles.cardTitle}>{item.author}</Text>
+       <Text numberOfLines={2} style= {styles.cardDetails}>{item.title}</Text>
+       <Text numberOfLines={1} style= {styles.time}>{moment(item.publishedAt).format('yyyy')}</Text>
 
      </View>
      </View>
