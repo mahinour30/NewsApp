@@ -5,6 +5,7 @@ import SinglePost from './SinglePost';
 
 
 const PostsStack = createStackNavigator();
+// creating stack navigaton for single posts to navigate it through the tab navigator
 
 function PostsStackScreen() {
   return (
