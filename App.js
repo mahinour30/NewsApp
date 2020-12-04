@@ -1,18 +1,18 @@
 import 'react-native-gesture-handler';
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import PostsStackScreen from './Screens/PostsStackScreen';
 import SourcesStackScreen from './Screens/SourcesStackScreen';
 import History from './Screens/History';
 
 
-const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
 const App =()=>{
   return(
+
+    // creating navigation container around the whole app and creating the tab navigators
     <NavigationContainer>
    <Tab.Navigator>
     <Tab.Screen name="Posts" component={PostsStackScreen} />
