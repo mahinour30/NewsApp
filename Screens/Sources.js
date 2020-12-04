@@ -1,7 +1,6 @@
 import React, {useState, useEffect}  from 'react';
-import {View, Text, Image, TouchableOpacity, StyleSheet, ScrollView, Alert} from 'react-native';
+import {View, Text, TouchableOpacity, StyleSheet, ScrollView, Alert} from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
-import moment from 'moment';
 
 
 const URL = 'http://newsapi.org/v2/top-headlines?country=eg&category=business&apiKey=378c8ec60f864f2f839fd9499e69b4ce';
@@ -10,6 +9,7 @@ const Sources =({navigation})=>{
     const [data, setData]=useState([]);
 
 
+    // retrieve the data from the API
 
     useEffect(()=>{
         fetch(URL)
@@ -17,7 +17,7 @@ const Sources =({navigation})=>{
         .then((json)=> {
           setData(json.articles)
         })
-        .catch((error) => Alert.alert('Error','Something IS Wrong!'))
+        .catch((error) => Alert.alert('Error','Something IS Wrong!',error))
       }, []);
 
 
@@ -30,9 +30,7 @@ const Sources =({navigation})=>{
      data != null &&
 
 <FlatList style={{flex:1}}
-//contentContainerStyle={{alignItems:"center"}}
  data={data}
- keyExtractor={({id}, index)=>id}
  renderItem={({item})=>{
     return(
         <View style ={styles.sliderContainer}> 
@@ -41,7 +39,7 @@ const Sources =({navigation})=>{
           })}>
      <View style = {styles.card}>
      <View style = {styles.cardInfo}>
-    <Text style={styles.cardTitle}>{item.source.name}</Text>
+    <Text numberOfLines={1} style={styles.cardTitle}>{item.source.name}</Text>
 
      </View>
      </View>
