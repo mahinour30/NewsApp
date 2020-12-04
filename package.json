@@ -16,6 +16,7 @@
     "@react-navigation/bottom-tabs": "^5.11.2",
     "@react-navigation/native": "^5.8.10",
     "@react-navigation/stack": "^5.12.8",
+    "@reduxjs/toolkit": "^1.5.0",
     "moment": "^2.29.1",
     "react": "16.13.1",
     "react-native": "0.63.4",
@@ -23,7 +24,8 @@
     "react-native-reanimated": "^1.13.2",
     "react-native-safe-area-context": "^3.1.9",
     "react-native-screens": "^2.15.0",
-    "react-native-webview": "^11.0.0"
+    "react-native-webview": "^11.0.0",
+    "redux": "^4.0.5"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",
