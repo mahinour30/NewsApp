@@ -49,7 +49,6 @@ const History =({route})=>{
   //pushing the data into the flatlist
 
     renderList = ({postTitle,PostAuthor,PostDate,postIMG,postSource})=>{
-      console.log("from history",PostDate)
 
       return(
         <View style ={{width:'100%', flexDirection:'column', paddingHorizontal:10,marginBottom:20}}>
