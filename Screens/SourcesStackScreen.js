@@ -6,6 +6,8 @@ import SingleSource from './SingleSource';
 
 const SourcesStack = createStackNavigator();
 
+// creating stack navigaton for single sources to navigate it through the tab navigator
+
 function SourcesStackScreen() {
   return (
     <SourcesStack.Navigator>
